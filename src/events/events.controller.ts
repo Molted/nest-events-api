@@ -1,21 +1,33 @@
-import { Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 
 @Controller('events')
 export class EventsController {
-    @Get()
-    findAll() {}
+  @Get()
+  findAll() {}
 
-    @Get(':id')
-    findOne(@Param('id') id: string) {
-        return id;
-    }
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return id;
+  }
 
-    @Post()
-    create() {}
+  @Post()
+  create(@Body() input) {
+    return input;
+  }
 
-    @Patch(':id')
-    update(@Param('id') id: string) {}
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() input) {}
 
-    @Delete(':id')
-    remove(@Param('id') id: string) {}
+  @Delete(':id')
+  @HttpCode(204)
+  remove(@Param('id') id: string) {}
 }
