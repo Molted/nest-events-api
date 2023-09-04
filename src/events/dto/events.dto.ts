@@ -1,10 +1,19 @@
-import { PartialType } from "@nestjs/mapped-types";
+import { PartialType } from '@nestjs/mapped-types';
+import { IsDateString, IsString, Length } from 'class-validator';
 
 export class CreateEventDTO {
-    name: string;
-    description: string;
-    when: string;
-    address: string;
+  @IsString()
+  @Length(5, 255)
+  name: string;
+
+  @Length(5, 255)
+  description: string;
+
+  @IsDateString()
+  when: string;
+
+  @Length(5, 255)
+  address: string;
 }
 
 export class UpdateEventDTO extends PartialType(CreateEventDTO) {}
