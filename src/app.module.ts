@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { EventsController } from './events/events.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Event } from './events/entities/event.entity';
 
 @Module({
   imports: [
@@ -11,6 +12,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       username: 'root',
       password: 'example',
       database: 'nest-events',
+      entities: [Event],
+      synchronize: true,
   })
 ],
   controllers: [EventsController],
