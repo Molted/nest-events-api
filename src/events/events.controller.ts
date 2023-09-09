@@ -14,6 +14,7 @@ import { CreateEventDTO, UpdateEventDTO } from './dto/events.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Event } from './entities/event.entity';
 import { Like, MoreThan, Repository } from 'typeorm';
+import { Attendee } from './entities/attendee.entity';
 
 @Controller('events')
 export class EventsController {
@@ -22,6 +23,8 @@ export class EventsController {
   constructor(
     @InjectRepository(Event)
     private readonly repository: Repository<Event>,
+    @InjectRepository(Attendee)
+    private readonly attendeeRepository: Repository<Attendee>,
   ) {}
 
   @Get()
@@ -50,10 +53,24 @@ export class EventsController {
 
   @Get('practice2')
   async practice2() {
-    return await this.repository.findOne({
+    // return await this.repository.findOne({
+    //   where: { id: 1 },
+    //   relations: ['attendees'],
+    // });
+
+    const event = await this.repository.findOne({
       where: { id: 1 },
       relations: ['attendees'],
     });
+
+    const attendee = new Attendee();
+    attendee.name = 'Using Cascade 2';
+
+    event.attendees.push(attendee);
+
+    await this.repository.save(event);
+
+    return event;
   }
 
   @Get(':id')
