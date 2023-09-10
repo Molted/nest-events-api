@@ -6,6 +6,7 @@ import { EventsModule } from './events/events.module';
 import { ConfigModule } from '@nestjs/config';
 import ormConfig from './config/orm.config';
 import ormConfigProd from './config/orm.config.prod';
+import { SchoolModule } from './school/school.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import ormConfigProd from './config/orm.config.prod';
         process.env.NODE_ENV !== 'production' ? ormConfig : ormConfigProd,
     }),
     EventsModule,
+    SchoolModule,
   ],
   controllers: [],
   providers: [],
